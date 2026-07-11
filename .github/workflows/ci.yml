@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [18, 20, 22]
 
@@ -32,13 +33,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test MCP server initialization
+      - name: Test MCP server (robust)
         run: |
-          timeout 5 node build/index.js << 'EOF'
-          {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}
-          {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
-          EOF
-          echo "MCP server boot test passed"
+          echo "Testing MCP boot with 10s timeout..."
+          node scripts/test-mcp.js
+          echo "✅ MCP server OK on Node ${{ matrix.node-version }}"
 
       - name: Verify build artifacts
         run: |
