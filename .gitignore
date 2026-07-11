@@ -1,5 +1,5 @@
+# Keep build ignored locally, but Dockerfile builds it in cloud
 node_modules/
-build/
 dist/
 .env
 .env.local
@@ -11,3 +11,5 @@ coverage/
 .idea/
 .vscode/
 *.tsbuildinfo
+# Don't ignore build for Docker? Actually keep ignored - Docker builds fresh
+build/

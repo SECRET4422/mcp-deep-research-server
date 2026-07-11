@@ -1,6 +1,6 @@
 {
   "name": "mcp-deep-research-server",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Non-generic Deep Research MCP Server - search, scrape, synthesize, fact-check, persistent memory. No API keys needed.",
   "type": "module",
   "main": "build/index.js",
@@ -23,7 +23,9 @@
     "test:mcp": "node scripts/test-mcp.js",
     "lint": "tsc --noEmit",
     "prepublishOnly": "npm run build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "docker:build": "docker build -t mcp-deep-research-server .",
+    "docker:run": "docker run -i --rm mcp-deep-research-server"
   },
   "keywords": [
     "mcp",
