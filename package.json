@@ -1,0 +1,32 @@
+{
+  "name": "mcp-deep-research-server",
+  "version": "1.0.0",
+  "description": "Non-generic Deep Research MCP Server - search, scrape, synthesize, fact-check, memory",
+  "type": "module",
+  "main": "build/index.js",
+  "bin": {
+    "mcp-deep-research": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "node build/index.js",
+    "dev": "tsx src/index.ts",
+    "inspect": "npx @modelcontextprotocol/inspector node build/index.js"
+  },
+  "keywords": ["mcp", "research", "scraping", "search", "fact-check"],
+  "author": "Arena Agent",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "cheerio": "^1.0.0",
+    "turndown": "^7.2.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/turndown": "^5.0.5",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}

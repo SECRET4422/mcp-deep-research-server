@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "deep-research": {
+      "command": "node",
+      "args": ["/home/user/mcp-deep-research/build/index.js"],
+      "description": "Deep Research Agent - search, scrape, synthesize, fact-check, memory"
+    }
+  }
+}
