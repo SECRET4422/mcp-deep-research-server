@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [18, 20, 22]
+        node-version: [20, 22]
 
     steps:
       - name: Checkout
@@ -35,7 +35,7 @@ jobs:
 
       - name: Test MCP server (robust)
         run: |
-          echo "Testing MCP boot with 10s timeout..."
+          echo "Testing MCP boot on Node ${{ matrix.node-version }}..."
           node scripts/test-mcp.js
           echo "✅ MCP server OK on Node ${{ matrix.node-version }}"
 

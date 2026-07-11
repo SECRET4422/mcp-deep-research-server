@@ -52,7 +52,7 @@
   },
   "homepage": "https://github.com/SECRET4422/mcp-deep-research-server#readme",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.18.1"
   },
   "publishConfig": {
     "access": "public"
