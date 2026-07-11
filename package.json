@@ -1,6 +1,6 @@
 {
   "name": "mcp-deep-research-server",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Non-generic Deep Research MCP Server - search, scrape, synthesize, fact-check, persistent memory. No API keys needed.",
   "type": "module",
   "main": "build/index.js",
