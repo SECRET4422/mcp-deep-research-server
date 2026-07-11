@@ -1,0 +1,62 @@
+# Smithery.ai deployment config - https://smithery.ai
+# This allows users to install via: npx @smithery/cli install mcp-deep-research-server --client claude
+runtime: typescript
+name: mcp-deep-research-server
+displayName: Deep Research MCP Server
+description: Non-generic Deep Research MCP - search, scrape, synthesize, fact-check, persistent memory. No API keys needed. 8 tools.
+author: SECRET4422
+homepage: https://github.com/SECRET4422/mcp-deep-research-server
+repository: https://github.com/SECRET4422/mcp-deep-research-server
+keywords:
+  - research
+  - search
+  - scraping
+  - fact-check
+  - deep-research
+  - duckduckgo
+  - memory
+  - mcp
+license: MIT
+
+# How Smithery starts your server
+startCommand:
+  type: stdio
+  commandFunction: |
+    (config) => ({
+      command: "node",
+      args: ["build/index.js"],
+      env: {
+        TAVILY_API_KEY: config.tavilyApiKey || "",
+        BRAVE_API_KEY: config.braveApiKey || "",
+        // Optional billing keys for AgenticMarket/MCPize
+        AGENTIC_MARKET_SECRET: config.agenticMarketSecret || "",
+        MCPIZE_API_KEY: config.mcpizeApiKey || ""
+      }
+    })
+
+# Config schema for users (optional API keys for better results)
+configSchema:
+  type: object
+  properties:
+    tavilyApiKey:
+      type: string
+      title: Tavily API Key (optional)
+      description: For better search quality. Get at tavily.com. Falls back to DuckDuckGo if empty.
+      default: ""
+    braveApiKey:
+      type: string
+      title: Brave Search API Key (optional)
+      description: Alternative search. Get at brave.com/search/api. Optional.
+      default: ""
+    agenticMarketSecret:
+      type: string
+      title: AgenticMarket Secret (monetization)
+      description: If you list on AgenticMarket.dev for monetization, put secret here to enable paid verification
+      default: ""
+  required: []
+
+# Example questions for Smithery listing
+exampleQuestions:
+  - "Use deep_research to research 'Best way to monetize MCP servers in 2026' with depth deep"
+  - "Fact check claim: Dehradun is the winter capital of Uttarakhand"
+  - "Compare these 2 URLs about MCP: https://modelcontextprotocol.io/docs/getting-started/intro and https://www.anthropic.com/news/model-context-protocol"

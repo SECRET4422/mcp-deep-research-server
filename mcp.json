@@ -1,0 +1,30 @@
+{
+  "name": "mcp-deep-research-server",
+  "display_name": "Deep Research MCP Server",
+  "description": "Non-generic Deep Research: search (no API key), parallel scrape 3-8 sources, synthesize with citations, fact-check, compare sources, persistent memory. 8 tools.",
+  "version": "1.2.0",
+  "author": {
+    "name": "SECRET4422",
+    "url": "https://github.com/SECRET4422"
+  },
+  "homepage": "https://github.com/SECRET4422/mcp-deep-research-server",
+  "repository": "https://github.com/SECRET4422/mcp-deep-research-server",
+  "license": "MIT",
+  "keywords": ["mcp", "research", "search", "scraping", "fact-check", "deep-research", "claude", "memory"],
+  "transports": ["stdio"],
+  "tools": 8,
+  "resources": 3,
+  "prompts": 3,
+  "installation": {
+    "npm": "npx mcp-deep-research-server",
+    "local": "node build/index.js"
+  },
+  "pricing": {
+    "model": "freemium",
+    "free_tier": "Unlimited local use, DuckDuckGo search",
+    "paid_tiers": [
+      {"name": "MCPize", "price": "$0.03 per deep_research call", "revenue_share": "80% to author", "link": "https://mcpize.com"},
+      {"name": "AgenticMarket", "price": "You set price, 80-90% to you", "link": "https://agenticmarket.dev"}
+    ]
+  }
+}
