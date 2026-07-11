@@ -3,10 +3,10 @@
 </p>
 
 <h1 align="center">Deep Research MCP Server</h1>
-[![MCPize](https://mcpize.com/badge/@SECRET4422/deep-research-22)](https://mcpize.com/mcp/deep-research-22)
 <p align="center"><b>Non-generic MCP for real research. Search → Scrape → Synthesize → Fact-check → Remember.</b></p>
 
 <p align="center">
+  [![MCPize](https://mcpize.com/badge/@SECRET4422/deep-research-32)](https://mcpize.com/mcp/deep-research-32)
   <a href="https://github.com/SECRET4422/mcp-deep-research-server/actions"><img src="https://img.shields.io/github/actions/workflow/status/SECRET4422/mcp-deep-research-server/ci.yml?branch=main&label=CI&logo=github" alt="CI" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/SECRET4422/mcp-deep-research-server" alt="MIT" /></a>
   <a href="package.json"><img src="https://img.shields.io/badge/TypeScript-5.6-blue?logo=typescript" alt="TS" /></a>
@@ -81,10 +81,10 @@ npm run build
 Use this MCP server instantly with no local installation:
 
 ```bash
-npx -y mcpize connect @SECRET4422/deep-research-22 --client claude
+npx -y mcpize connect @SECRET4422/deep-research-32 --client claude
 ```
 
-Or connect at: **https://mcpize.com/mcp/deep-research-22**
+Or connect at: **https://mcpize.com/mcp/deep-research-32**
 
 ### Test (smoke)
 
