@@ -1,0 +1,23 @@
+# MCPize Configuration
+# Docs: https://mcpize.com/docs/mcpize-yaml
+
+version: 1
+
+name: "Deep Research"
+slug: "deep-research"
+
+runtime: typescript
+entry: "build/index.js"
+
+build:
+  install: "npm install"
+  command: "npm run build"
+
+start:
+  type: stdio
+  command: "node"
+  args:
+    - "build/index.js"
+
+bridge:
+  mode: stdio
