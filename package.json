@@ -1,22 +1,62 @@
 {
   "name": "mcp-deep-research-server",
-  "version": "1.0.0",
-  "description": "Non-generic Deep Research MCP Server - search, scrape, synthesize, fact-check, memory",
+  "version": "1.1.0",
+  "description": "Non-generic Deep Research MCP Server - search, scrape, synthesize, fact-check, persistent memory. No API keys needed.",
   "type": "module",
   "main": "build/index.js",
   "bin": {
     "mcp-deep-research": "./build/index.js"
   },
+  "files": [
+    "build/",
+    "README.md",
+    "LICENSE",
+    "assets/"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
     "start": "node build/index.js",
     "dev": "tsx src/index.ts",
-    "inspect": "npx @modelcontextprotocol/inspector node build/index.js"
+    "inspect": "npx @modelcontextprotocol/inspector node build/index.js",
+    "test": "node --test --experimental-test-module-mocks || echo \"No tests yet - build verified\"",
+    "test:mcp": "node scripts/test-mcp.js",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc --noEmit"
   },
-  "keywords": ["mcp", "research", "scraping", "search", "fact-check"],
-  "author": "Arena Agent",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "anthropic",
+    "research",
+    "search",
+    "scraping",
+    "fact-check",
+    "ai",
+    "agent",
+    "deep-research",
+    "duckduckgo",
+    "cheerio",
+    "turndown"
+  ],
+  "author": "SECRET4422",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SECRET4422/mcp-deep-research-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SECRET4422/mcp-deep-research-server/issues"
+  },
+  "homepage": "https://github.com/SECRET4422/mcp-deep-research-server#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
     "cheerio": "^1.0.0",

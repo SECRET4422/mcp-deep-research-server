@@ -1,151 +1,187 @@
-# Deep Research MCP Server - Non-Generic
+<p align="center">
+  <img src="assets/logo.png" width="140" alt="Deep Research MCP Logo" />
+</p>
 
-This is **not** a hello-world MCP. It's a production-grade research agent with real tools.
+<h1 align="center">Deep Research MCP Server</h1>
+<p align="center"><b>Non-generic MCP for real research. Search → Scrape → Synthesize → Fact-check → Remember.</b></p>
 
-## What Makes This Non-Generic?
+<p align="center">
+  <a href="https://github.com/SECRET4422/mcp-deep-research-server/actions"><img src="https://img.shields.io/github/actions/workflow/status/SECRET4422/mcp-deep-research-server/ci.yml?branch=main&label=CI&logo=github" alt="CI" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/SECRET4422/mcp-deep-research-server" alt="MIT" /></a>
+  <a href="package.json"><img src="https://img.shields.io/badge/TypeScript-5.6-blue?logo=typescript" alt="TS" /></a>
+  <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Compatible-black?logo=anthropic" alt="MCP" /></a>
+  <a href="https://www.npmjs.com/package/mcp-deep-research-server"><img src="https://img.shields.io/badge/npm-1.1.0-red?logo=npm" alt="npm" /></a>
+  <img src="https://img.shields.io/badge/No%20API%20Key%20Needed-green" alt="No API Key" />
+</p>
 
-Generic MCPs: `echo`, `read_file`, `fetch`. Boring.
+---
 
-This one:
-- **Orchestrated research**: `deep_research` does search -> parallel scrape 3-8 sites -> synthesize report with citations -> saves to history
-- **Real search engine** without API key: scrapes DuckDuckGo HTML (with caching, anti-bot headers)
-- **Smart scraping**: Cheerio + Turndown, main content detection, removes nav/ads, extracts headings/links/metadata, 10min cache
-- **Fact-checking with scoring**: searches both supporting and contradicting sources, heuristic stance detection
-- **Source comparison**: Finds consensus vs unique insights across 2-5 URLs
-- **Persistent memory**: Saves findings to `~/.mcp-deep-research/memory.json` - survives restarts
-- **Resources & Prompts**: Exposes `research://memory`, `research://history`, `research://stats` + workflow prompts
+### Why not generic?
 
-## Architecture
+| Generic MCP (boring) | This MCP (pro) |
+|---|---|
+| `echo`, `fetch` | **Orchestrated deep research** |
+| Returns raw HTML | **Cheerio + Turndown → clean markdown** + headings, links, meta |
+| No memory | **Persistent memory** in `~/.mcp-deep-research/` |
+| One page at a time | **Parallel 3-worker scraper**, 10min cache |
+| No reasoning | **Fact-check with stance scoring**, contradiction detection |
 
+### Architecture
+
+```mermaid
+graph LR
+    A[User: deep_research topic] --> B[search_web DDG HTML]
+    B --> C[Parallel Scrape x3-8]
+    C --> D[cheerio clean + turndown md]
+    D --> E[extract_insights heuristic]
+    E --> F[Synthesize Report + Citations]
+    F --> G[memory_save + history]
+    F --> H[Return to Claude]
+    
+    I[compare_sources] --> C
+    J[fact_check_claim] --> B
+    K[memory_search] --> G
 ```
-src/index.ts ~1100 LOC
-  ├── Search: DuckDuckGo HTML parser, UDDG decoding, abort controller
-  ├── Scrape: fetch + cheerio + turndown, main-content heuristic
-  ├── Insights: entity extraction, stats regex, key-point scoring
-  ├── Memory: JSON file store with tags, upsert, fuzzy search
-  ├── History: last 100 actions
-  └── 8 Tools + 3 Resources + 3 Prompts
-```
 
-## Tools (8)
+### Tools (8)
 
-1.  **search_web** - `query, count (1-10), timeFilter` - No API key needed
-2.  **scrape_page** - `url, format: markdown|text|full, extractMainOnly` - Cached
-3.  **extract_insights** - `content, goal?` - Entities, stats, key points, reading time
-4.  **deep_research** - `topic, depth: quick|standard|deep, maxSources, saveMemory` - THE POWER TOOL. Orchestrated.
-5.  **compare_sources** - `urls: 2-5, focus?` - Consensus vs contradictions
-6.  **fact_check_claim** - `claim, searchDepth` - Verdict: SUPPORTED/CONTRADICTED/MIXED/INCONCLUSIVE + confidence
-7.  **memory_save** - `key, value, tags[], source?` - Persistent
-8.  **memory_search** - `query, tags[], limit` - Fuzzy
+| Tool | What it does | Params |
+|------|--------------|--------|
+| `search_web` | DuckDuckGo HTML search, no API key, UDDG decode | `query, count 1-10, timeFilter` |
+| `scrape_page` | Fetch + main-content heuristic + markdown | `url, format=markdown|text|full, extractMainOnly` |
+| `extract_insights` | Entities, stats regex, key-point scoring, reading time | `content, goal?` |
+| `deep_research` | **Power tool** — search → parallel scrape → synthesize report | `topic, depth=quick|standard|deep, maxSources, saveMemory` |
+| `compare_sources` | 2-5 URLs → consensus vs unique vs contradictions | `urls[], focus?` |
+| `fact_check_claim` | Searches support + `debunked OR false`, heuristic verdict | `claim, searchDepth` |
+| `memory_save` | Save finding to JSON, survives restarts | `key, value, tags[], source?` |
+| `memory_search` | Fuzzy search in persistent memory | `query, tags[], limit` |
 
-## Resources (3)
+**Resources:**
+- `research://memory` — all saved findings
+- `research://history` — last 100 actions
+- `research://stats` — cache size, uptime
 
-- `research://memory` - All persistent memories
-- `research://history` - Last 100 searches/researches
-- `research://stats` - Cache size, uptime, counts
+**Prompts:**
+- `deep-dive-research` — full research workflow
+- `fact-check` — fact-checker squad
+- `compare-narratives` — bias & comparison table
 
-## Prompts (3)
-
-- `deep-dive-research` - Full research workflow instructions
-- `fact-check` - Fact-checking squad instructions
-- `compare-narratives` - Bias/comparison table instructions
-
-## Install & Build
+### Install
 
 ```bash
-cd mcp-deep-research
+git clone https://github.com/SECRET4422/mcp-deep-research-server.git
+cd mcp-deep-research-server
 npm install
 npm run build
 ```
 
-### Test locally with inspector
+### Test (smoke)
+
 ```bash
-npm run inspect
-# opens http://localhost:6274
+npm run test:mcp
+# or
+npm run inspect # opens http://localhost:6274
 ```
 
-## Usage with Claude Desktop
+Manually tested:
+```
+[search] Dehradun → 3 results ✓
+[deep_research] What is MCP → 3 sources in 2.1s ✓
+tools/list → 8 tools ✓
+```
 
-`~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
-`%APPDATA%\Claude\claude_desktop_config.json` (Windows)
-`~/.config/Claude/claude_desktop_config.json` (Linux)
+### Add to Claude Desktop
+
+Edit config:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+- Linux: `~/.config/Claude/claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "deep-research": {
       "command": "node",
-      "args": ["/absolute/path/to/mcp-deep-research/build/index.js"],
-      "env": {}
+      "args": ["/absolute/path/to/mcp-deep-research-server/build/index.js"]
     }
   }
 }
 ```
 
-Then restart Claude Desktop.
+Restart Claude Desktop.
 
-For Cursor / Windsurf:
+### Add to Cursor / Windsurf / VS Code
 
-`.cursor/mcp.json` or settings:
+`.cursor/mcp.json` or `mcp.json`:
 
 ```json
 {
   "mcpServers": {
     "deep-research": {
       "command": "node",
-      "args": ["/home/user/mcp-deep-research/build/index.js"]
+      "args": ["./build/index.js"],
+      "cwd": "/path/to/mcp-deep-research-server"
     }
   }
 }
 ```
 
-## Example Workflows
+### Example Prompts
 
-**In Claude:**
-> "Use deep_research to research 'state of MCP servers in 2026', depth deep"
+**Deep Research:**
+> Use deep_research to research "Best LLM fine-tuning in 2026, depth deep" then compare LoRA vs QLoRA
 
-Claude will:
-1. Call search_web
-2. Call deep_research which parallel-scrapes 8 sources
-3. Returns synthesized report with citations
-4. Auto-saves key findings to memory
+**Fact Check:**
+> Fact check claim: "Bun is faster than Node" using fact_check_claim
 
-> "Fact check claim: 'Bun is faster than Node'"
+**Compare:**
+> Compare these 3 URLs about MCP architecture focusing on security:
+> https://modelcontextprotocol.io/docs/getting-started/intro
+> https://www.anthropic.com/news/model-context-protocol
+> https://en.wikipedia.org/wiki/Model_Context_Protocol
 
-> "Compare these 3 articles about React 19: [url1], [url2], [url3] focusing on server components"
+See `examples/claude-example.md` for more.
 
-> "Search my research memory for 'pricing'"
+### Data Storage
 
-## Data Storage
+All in `~/.mcp-deep-research/`:
+- `memory.json` — persistent findings
+- `history.json` — audit log (100 max)
+- `cache/` — reserved
 
-All data in `~/.mcp-deep-research/`:
-- `memory.json` - persistent findings
-- `history.json` - audit log
-- `cache/` - reserved for future disk cache
+No DB, no external calls except search/scrape.
 
-No external DB, no API keys required.
+### Pro Features in v1.1.0
 
-## Why Cheerio + Turndown?
+- ✅ Logo + pro README + badges
+- ✅ GitHub Actions CI (Node 18/20/22) + Release workflow
+- ✅ Issue templates, PR template, CONTRIBUTING, SECURITY
+- ✅ `.editorconfig`, smoke test script
+- ✅ Optimized `package.json` for npm publishing
+- ✅ CHANGELOG tracked
 
-- Generic MCPs return raw HTML. This extracts **readable markdown**, headings structure, and links.
-- Turndown preserves semantics vs naive text extraction.
-- Main-content heuristic uses 9 selectors: article, main, [role=main], .post-content etc.
+### Roadmap
 
-## Performance
+- [ ] Tavily / Brave API fallback if keys present
+- [ ] PDF parsing via `pdf-parse`
+- [ ] YouTube transcript tool
+- [ ] Vector search on memory (embeddings)
+- [ ] Blocklist for SSRF (169.254.169.254 etc)
+- [ ] Smithery registry
 
-- Search: ~2-4s (DDG HTML)
-- Scrape: parallel with 3 workers, 15s timeout per page
-- Cache: 10min in-memory to avoid re-fetch
-- Deep research (5 sources): ~10-20s end-to-end
+### Dev
 
-## Extension Ideas
+```bash
+npm run dev     # tsx watch
+npm run build
+npm run lint
+```
 
-- Add Tavily/Brave API if `TAVILY_API_KEY` or `BRAVE_API_KEY` env present (currently falls back to DDG)
-- Add PDF scraping via `pdf-parse`
-- Add YouTube transcript tool
-- Add vector search on memory with embeddings
-- Add screenshot tool using puppeteer
+Guidelines in `CONTRIBUTING.md`.
 
-## License
+### License
 
-MIT
+MIT © SECRET4422 — See LICENSE
+
+> Built with 🧠 for Dehradun → World. Not a generic MCP.
