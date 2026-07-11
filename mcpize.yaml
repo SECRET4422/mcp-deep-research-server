@@ -1,0 +1,57 @@
+# MCPize deployment config
+# Adding this because Smithery console suggested it
+# This file helps MCPize know how to build and run the server
+
+name: mcp-deep-research-server
+display_name: Deep Research MCP Server
+description: Non-generic research MCP - search (no API key), scrape 3-8 pages parallel, synthesize with citations, fact-check, memory. Built for real work, not demo.
+
+# Runtime - needs Node 20+ because cheerio 1.2 needs File global
+runtime: nodejs
+runtime_version: "20"
+
+# Build - MCPize will run this in Cloud Build
+build:
+  command: npm ci && npm run build
+  output_dir: build
+
+# Run - MCP runs on stdio, MCPize wraps with HTTP bridge
+run:
+  command: node build/index.js
+  protocol: stdio
+  mode: stdio-bridge
+
+# Platform - using GCP Cloud Run as shown in your screenshot
+platform: gcp
+region: us-iowa
+
+# Env - no secrets needed for free tier
+env:
+  NODE_ENV: production
+
+# Metadata for marketplace listing
+author: SECRET4422
+repository: https://github.com/SECRET4422/mcp-deep-research-server
+homepage: https://github.com/SECRET4422/mcp-deep-research-server
+license: MIT
+keywords:
+  - research
+  - search
+  - deep-research
+  - fact-check
+  - memory
+
+# Pricing - for monetization (Option 1)
+pricing:
+  model: per_call
+  free_tier:
+    enabled: true
+    limits: 50 calls/month
+  paid_tiers:
+    search_web: 0.01
+    scrape_page: 0.01
+    deep_research_quick: 0.03
+    deep_research_standard: 0.05
+    deep_research_deep: 0.10
+    compare_sources: 0.04
+    fact_check: 0.03

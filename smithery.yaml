@@ -1,42 +1,54 @@
-# Smithery deployment - simplified, buildpack compatible
+# Deep Research MCP - built for my own use in Dehradun
+# I was tired of generic echo/fetch MCPs, so made this one actually useful
+# - SECRET4422
+
 runtime: typescript
 name: mcp-deep-research-server
 displayName: Deep Research MCP Server
-description: Non-generic Deep Research MCP - search, scrape, synthesize, fact-check, persistent memory. 8 tools, no API keys.
+
+# What it does - search, scrape, synthesize
+# No API keys needed, uses DuckDuckGo HTML (free)
+description: Deep research MCP that actually works - search web without API key, scrape pages in parallel, compare sources, fact-check claims, and remember findings. 8 tools total. Built because generic MCPs were useless for real research.
+
 author: SECRET4422
 homepage: https://github.com/SECRET4422/mcp-deep-research-server
 repository: https://github.com/SECRET4422/mcp-deep-research-server
+license: MIT
+
 keywords:
+  - mcp
   - research
+  - deep-research
   - search
   - scraping
   - fact-check
-  - deep-research
-  - duckduckgo
   - memory
-  - mcp
-license: MIT
+  - claude
 
-# Smithery will run: npm install && npm run build
-# Then start with stdio
+# How to start - simple stdio
+# Smithery will do npm install && npm run build automatically
 startCommand:
   type: stdio
   configSchema:
     type: object
     properties: {}
   commandFunction: |
-    (config) => ({
-      command: "node",
-      args: ["build/index.js"],
-      env: {}
-    })
+    (config) => {
+      // keep it simple, just node build/index.js
+      return {
+        command: "node",
+        args: ["build/index.js"],
+        env: {}
+      }
+    }
 
 configSchema:
   type: object
   properties: {}
   required: []
 
+# Try these when testing
 exampleQuestions:
-  - "Use deep_research to research 'Best way to monetize MCP servers in 2026'"
-  - "Fact check: Dehradun is the winter capital of Uttarakhand"
-  - "Compare these URLs about MCP architecture"
+  - Use deep_research to research MCP monetization in 2026 with depth quick
+  - Fact check: Is Dehradun the winter capital of Uttarakhand?
+  - Search for best LLM fine-tuning methods and compare top 2 sources
