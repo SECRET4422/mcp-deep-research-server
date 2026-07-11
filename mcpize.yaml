@@ -4,10 +4,9 @@
 version: 1
 
 name: "Deep Research"
-slug: "deep-research"
+slug: "deep-research-22"
 
 runtime: typescript
-entry: "build/index.js"
 
 build:
   install: "npm install"
@@ -15,9 +14,7 @@ build:
 
 start:
   type: stdio
-  command: "node"
-  args:
-    - "build/index.js"
+  command: "node build/index.js"
 
 bridge:
   mode: stdio
