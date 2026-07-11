@@ -4,17 +4,18 @@
 version: 1
 
 name: "Deep Research"
-slug: "deep-research-32"
+slug: "deep-research-99"
 
-runtime: typescript
+runtime: container
 
 build:
-  install: "npm install"
-  command: "npm run build"
+  dockerfile: "Dockerfile"
 
 start:
   type: stdio
   command: "node build/index.js"
+  args:
+    - "build/index.js"
 
 bridge:
   mode: stdio
