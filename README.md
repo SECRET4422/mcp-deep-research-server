@@ -67,13 +67,26 @@ graph LR
 - `fact-check` — fact-checker squad
 - `compare-narratives` — bias & comparison table
 
-### Install
+### Quickstart & Installation
 
+#### ⚡ 1-Click Auto Setup for Claude Desktop (Recommended)
+Run this single command in your terminal:
 ```bash
-# Option A — install from npm (recommended)
-npx mcp-deep-research-server
+npx mcp-deep-research-server --install
+```
+> That's it! It automatically detects your OS, writes the config to your `claude_desktop_config.json`, and configures the 8 research tools. Just restart Claude Desktop.
 
-# Option B — from source
+---
+
+#### 🛠️ Manual / Other Clients Setup
+
+**Run via npx:**
+```bash
+npx mcp-deep-research-server
+```
+
+**Or build from source:**
+```bash
 git clone https://github.com/SECRET4422/mcp-deep-research-server.git
 cd mcp-deep-research-server
 npm install
