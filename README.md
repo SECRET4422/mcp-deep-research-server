@@ -12,6 +12,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/github/license/SECRET4422/mcp-deep-research-server" alt="MIT" /></a>
   <a href="https://github.com/SECRET4422/mcp-deep-research-server/stargazers"><img src="https://img.shields.io/github/stars/SECRET4422/mcp-deep-research-server?style=flat&logo=github" alt="stars" /></a>
   <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Compatible-black?logo=anthropic" alt="MCP" /></a>
+  <a href="skills/deep-research/SKILL.md"><img src="https://img.shields.io/badge/Agent%20Skill-Compatible-8a2be2" alt="Agent Skill" /></a>
   <img src="https://img.shields.io/badge/No%20API%20Key%20Needed-2ea44f" alt="No API Key" />
 </p>
 
@@ -92,6 +93,13 @@ cd mcp-deep-research-server
 npm install
 npm run build
 ```
+
+---
+
+#### 🤖 Agent Skill (Claude Code / Antigravity / Agent Frameworks)
+This repository includes an open-standard [Agent Skill](skills/deep-research/SKILL.md) that teaches AI coding assistants when and how to autonomously run deep research workflows.
+- Import via skill directory: `skills/deep-research/`
+- Spec compliant with Claude Code, Cursor, and Google Antigravity agents.
 
 ### Test (smoke)
 
