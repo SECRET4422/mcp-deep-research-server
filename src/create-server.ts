@@ -5,6 +5,7 @@ import TurndownService from "turndown";
 import fs from "fs/promises";
 import path from "path";
 import os from "os";
+import { assertSafeUrl } from "./assertSafeUrl.js";
 
 const DATA_DIR = path.join(os.homedir(), ".mcp-deep-research");
 const MEMORY_FILE = path.join(DATA_DIR, "memory.json");
@@ -88,6 +89,8 @@ async function searchDuckDuckGo(query: string, count: number = 5): Promise<Searc
 
 interface ScrapedPage { url: string; title: string; description: string; text: string; markdown: string; headings: { level: number; text: string }[]; links: { text: string; href: string }[]; wordCount: number; scrapedAt: string; }
 async function scrapePage(url: string, extractMainOnly = true): Promise<ScrapedPage> {
+  // SSRF protection — block private/internal IPs before fetching user-supplied URLs
+  await assertSafeUrl(url);
   const cached = pageCache.get(url);
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) return cached.content;
   const controller = new AbortController();

@@ -7,11 +7,12 @@
 
 <p align="center">
   <a href="https://github.com/SECRET4422/mcp-deep-research-server/actions"><img src="https://img.shields.io/github/actions/workflow/status/SECRET4422/mcp-deep-research-server/ci.yml?branch=main&label=CI&logo=github" alt="CI" /></a>
+  <a href="https://www.npmjs.com/package/mcp-deep-research-server"><img src="https://img.shields.io/npm/v/mcp-deep-research-server?logo=npm&color=red" alt="npm" /></a>
+  <a href="https://www.npmjs.com/package/mcp-deep-research-server"><img src="https://img.shields.io/npm/dm/mcp-deep-research-server?logo=npm" alt="downloads" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/SECRET4422/mcp-deep-research-server" alt="MIT" /></a>
-  <a href="package.json"><img src="https://img.shields.io/badge/TypeScript-5.6-blue?logo=typescript" alt="TS" /></a>
+  <a href="https://github.com/SECRET4422/mcp-deep-research-server/stargazers"><img src="https://img.shields.io/github/stars/SECRET4422/mcp-deep-research-server?style=flat&logo=github" alt="stars" /></a>
   <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Compatible-black?logo=anthropic" alt="MCP" /></a>
-  <a href="https://www.npmjs.com/package/mcp-deep-research-server"><img src="https://img.shields.io/badge/npm-1.1.0-red?logo=npm" alt="npm" /></a>
-  <img src="https://img.shields.io/badge/No%20API%20Key%20Needed-green" alt="No API Key" />
+  <img src="https://img.shields.io/badge/No%20API%20Key%20Needed-2ea44f" alt="No API Key" />
 </p>
 
 ---
@@ -69,6 +70,10 @@ graph LR
 ### Install
 
 ```bash
+# Option A — install from npm (recommended)
+npx mcp-deep-research-server
+
+# Option B — from source
 git clone https://github.com/SECRET4422/mcp-deep-research-server.git
 cd mcp-deep-research-server
 npm install
@@ -167,7 +172,7 @@ No DB, no external calls except search/scrape.
 - [ ] PDF parsing via `pdf-parse`
 - [ ] YouTube transcript tool
 - [ ] Vector search on memory (embeddings)
-- [ ] Blocklist for SSRF (169.254.169.254 etc)
+- [x] SSRF protection — private/internal IP blocklist for `scrape_page`
 - [ ] Smithery registry
 
 ### Dev
@@ -182,6 +187,6 @@ Guidelines in `CONTRIBUTING.md`.
 
 ### License
 
-MIT © SECRET4422 — See LICENSE
+MIT © Prabhakar Pal — See LICENSE
 
 > Built with 🧠 for Dehradun → World. Not a generic MCP.
