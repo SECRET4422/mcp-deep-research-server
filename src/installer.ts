@@ -27,11 +27,11 @@ export async function runInstaller(): Promise<void> {
     await fs.mkdir(configDir, { recursive: true });
 
     // 2. Read existing configuration if it exists
-    let config: { mcpServers: Record<string, any> } = { mcpServers: {} };
+    let config: Record<string, any> = { mcpServers: {} };
     try {
       const existingRaw = await fs.readFile(configPath, "utf-8");
       const parsed = JSON.parse(existingRaw);
-      if (parsed && typeof parsed === "object" && parsed.mcpServers && typeof parsed.mcpServers === "object") {
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
         config = parsed;
       }
     } catch {
@@ -39,7 +39,7 @@ export async function runInstaller(): Promise<void> {
       config = { mcpServers: {} };
     }
 
-    if (!config.mcpServers) {
+    if (!config.mcpServers || typeof config.mcpServers !== "object" || Array.isArray(config.mcpServers)) {
       config.mcpServers = {};
     }
 
