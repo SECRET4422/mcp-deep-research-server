@@ -11,6 +11,8 @@
   <a href="https://www.npmjs.com/package/mcp-deep-research-server"><img src="https://img.shields.io/npm/dm/mcp-deep-research-server?logo=npm" alt="downloads" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/SECRET4422/mcp-deep-research-server" alt="MIT" /></a>
   <a href="https://github.com/SECRET4422/mcp-deep-research-server/stargazers"><img src="https://img.shields.io/github/stars/SECRET4422/mcp-deep-research-server?style=flat&logo=github" alt="stars" /></a>
+  <a href="https://glama.ai/mcp/servers/SECRET4422/mcp-deep-research-server"><img src="https://glama.ai/mcp/servers/SECRET4422/mcp-deep-research-server/badges/score.svg" alt="Glama Score" /></a>
+  <a href="https://smithery.ai/server/@SECRET4422/mcp-deep-research-server"><img src="https://smithery.ai/badge/@SECRET4422/mcp-deep-research-server" alt="Smithery Badge" /></a>
   <a href="https://modelcontextprotocol.io"><img src="https://img.shields.io/badge/MCP-Compatible-black?logo=anthropic" alt="MCP" /></a>
   <a href="skills/deep-research/SKILL.md"><img src="https://img.shields.io/badge/Agent%20Skill-Compatible-8a2be2" alt="Agent Skill" /></a>
   <img src="https://img.shields.io/badge/No%20API%20Key%20Needed-2ea44f" alt="No API Key" />
@@ -79,6 +81,14 @@ npx mcp-deep-research-server --install
 
 ---
 
+#### 📦 Install via Smithery
+To automatically install for Claude Desktop or Cursor via Smithery:
+```bash
+npx -y @smithery/cli install mcp-deep-research-server --client claude
+```
+
+---
+
 #### 🛠️ Manual / Other Clients Setup
 
 **Run via npx:**
@@ -96,7 +106,7 @@ npm run build
 
 ---
 
-#### 🤖 Agent Skill (Claude Code / Antigravity / Agent Frameworks)
+#### 🤖 Agent Skill (Claude Code / Antigravity / Cursor / Agent Frameworks)
 This repository includes an open-standard [Agent Skill](skills/deep-research/SKILL.md) that teaches AI coding assistants when and how to autonomously run deep research workflows.
 - Import via skill directory: `skills/deep-research/`
 - Spec compliant with Claude Code, Cursor, and Google Antigravity agents.
@@ -194,7 +204,7 @@ No DB, no external calls except search/scrape.
 - [ ] YouTube transcript tool
 - [ ] Vector search on memory (embeddings)
 - [x] SSRF protection — private/internal IP blocklist for `scrape_page`
-- [ ] Smithery registry
+- [x] Smithery & Glama registry integration
 
 ### Dev
 
